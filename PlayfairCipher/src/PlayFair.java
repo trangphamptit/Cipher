@@ -17,6 +17,7 @@ public class PlayFair {
         System.out.println("Enter word to encrypt: ");
         String key_input = sc.next();
         System.out.println("Encryption: " + x.encryptMessage(key_input));
+        System.out.println("Encryption: " + x.decryptMessage(x.encryptMessage(key_input)));
         sc.close();
     }
     
@@ -148,4 +149,52 @@ public class PlayFair {
         }
         return Code;
     }
+    
+	public String decryptMessage(String Code)
+	{
+	    String Original = new String();
+	    String src_arr[] = Divid2Pairs(Code);
+	    char one;
+	    char two;
+	    int pos1[] = new int[2];
+	    int pos2[] = new int[2];
+	    for (int i = 0; i < src_arr.length; i++)
+	    {
+	        one = src_arr[i].charAt(0);
+	        two = src_arr[i].charAt(1);
+	        pos1 = findLetterPos(one);
+	        pos2 = findLetterPos(two);
+	        if (pos1[0] == pos2[0])
+	        {
+	            if (pos1[1] > 0)
+	                pos1[1]--;
+	            else
+	                pos1[1] = 4;
+	            if (pos2[1] > 0)
+	                pos2[1]--;
+	            else
+	                pos2[1] = 4;
+	        }
+	        else if (pos1[1] == pos2[1])
+	        {
+	            if (pos1[0] > 0)
+	                pos1[0]--;
+	            else
+	                pos1[0] = 4;
+	            if (pos2[0] > 0)
+	                pos2[0]--;
+	            else
+	                pos2[0] = 4;
+	        }
+	        else
+	        {
+	            int temp = pos1[1];
+	            pos1[1] = pos2[1];
+	            pos2[1] = temp;
+	        }
+	        Original = Original + matrix[pos1[0]][pos1[1]]
+	                + matrix[pos2[0]][pos2[1]];
+	    }
+	    return Original;
+	}
 }
