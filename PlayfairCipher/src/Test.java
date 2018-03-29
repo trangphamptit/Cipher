@@ -1,15 +1,16 @@
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-public class PlayFair {
+public class Test {
     private String keyWord        = new String();
-    private char matrix[][] 	  = new char[5][5];
+    private ArrayList<ArrayList<Character>> matrix 	  = new ArrayList<ArrayList<Character>>();
     private String alphabet = "abcdefghijklmnopqrstuvwxyz";
     
     public static void main(String[] args)
     {
-        PlayFair x = new PlayFair();
+        Test x = new Test();
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter a keyword:");
         String keyword = sc.next();
@@ -42,8 +43,9 @@ public class PlayFair {
         {
             for (int j = 0; j < 5; j++)
             {
-                matrix[i][j] = keyWord.charAt(i*5 + j);
-                System.out.print(matrix[i][j] + " ");
+            	matrix.add(new ArrayList<Character>());
+                matrix.get(i).add(new Character(keyWord.charAt(i*5 + j)));
+                System.out.print(matrix.get(i).get(j) + " ");
             }
             System.out.println();
         }
@@ -89,7 +91,7 @@ public class PlayFair {
         {
             for (int j = 0; j < 5; j++)
             {
-                if (matrix[i][j] == letter)
+                if (matrix.get(i).get(j) == letter)
                 {
                     key[0] = i;
                     key[1] = j;
@@ -143,8 +145,8 @@ public class PlayFair {
                 pos1[1] = pos2[1];
                 pos2[1] = temp;
             }
-            Code = Code + matrix[pos1[0]][pos1[1]]
-                    + matrix[pos2[0]][pos2[1]];
+            Code = Code + matrix.get(pos1[0]).get(pos1[1])
+                    + matrix.get(pos2[0]).get(pos2[1]);
         }
         return Code;
     }
