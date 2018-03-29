@@ -3,37 +3,38 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class PlayFair {
-    private String keyWord        = new String();
-    private char matrix[][] 	  = new char[5][5];
-    private String alphabet = "abcdefghijklmnopqrstuvwxyz";
+    public static String keyWord        = new String();
+    private static char matrix[][] 	  = new char[5][5];
+    private static String alphabet = "abcdefghijklmnopqrstuvwxyz";
     
     public static void main(String[] args)
     {
         PlayFair x = new PlayFair();
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter a keyword:");
-        String keyword = sc.next();
+        String keyword = sc.nextLine();
         x.setKey(keyword);
         System.out.println("Enter word to encrypt: ");
-        String key_input = sc.next();
-        System.out.println("Encryption: " + x.encryptMessage(key_input));
-        System.out.println("Encryption: " + x.decryptMessage(x.encryptMessage(key_input)));
+        String key_input = sc.nextLine();
+        System.out.println("Encryption: " + x.encrypt(key_input));
+        System.out.println("Encryption: " + x.decrypt(x.encrypt(key_input)));
         sc.close();
     }
     
     public void setKey(String k)
     {
     	Set<Character> charSet = new LinkedHashSet<Character>();
+    	k = k.replace(" ", "");
     	k += alphabet;
         for(char ch: k.toCharArray()){
-//        	if(ch == 'j')
-//        		continue;
+        	if(ch == 'j')
+        		continue;
             charSet.add(ch);
         }
         for(Character ch: charSet){
         	keyWord += ch;
         }
-        System.out.println(keyWord);
+//        System.out.println(keyWord);
         createMatrix();
     }
  
@@ -44,13 +45,13 @@ public class PlayFair {
             for (int j = 0; j < 5; j++)
             {
                 matrix[i][j] = keyWord.charAt(i*5 + j);
-                System.out.print(matrix[i][j] + " ");
+//                System.out.print(matrix[i][j] + " ");
             }
-            System.out.println();
+//            System.out.println();
         }
     }
  
-    private String format(String old_text)
+    private static String format(String old_text)
     {
         int len = 0;
         String text = old_text.replace('j', 'i');
@@ -69,7 +70,7 @@ public class PlayFair {
         return pair;
     }
  
-    private String[] Divid2Pairs(String new_string)
+    private static String[] Divid2Pairs(String new_string)
     {
         String Original = format(new_string);
         int size = Original.length();
@@ -81,7 +82,7 @@ public class PlayFair {
         return x;
     }
  
-    public int[] findLetterPos(char letter)
+    private static int[] findLetterPos(char letter)
     {
         int[] key = new int[2];
         if (letter == 'j')
@@ -101,8 +102,9 @@ public class PlayFair {
         return key;
     }
  
-    public String encryptMessage(String Source)
+    public static String encrypt(String Source)
     {
+    	Source = Source.replace(" ", "");
         String src_arr[] = Divid2Pairs(Source);
         String Code = new String();
         char one;
@@ -150,7 +152,7 @@ public class PlayFair {
         return Code;
     }
     
-	public String decryptMessage(String Code)
+	public static String decrypt(String Code)
 	{
 	    String Original = new String();
 	    String src_arr[] = Divid2Pairs(Code);
