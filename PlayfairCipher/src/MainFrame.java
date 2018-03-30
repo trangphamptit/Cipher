@@ -25,9 +25,6 @@ public class MainFrame {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public MainFrame() {
 		initialize();
 	}
