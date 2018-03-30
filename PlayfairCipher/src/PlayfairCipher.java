@@ -49,7 +49,7 @@ public class PlayfairCipher extends JFrame {
 	 * Create the frame.
 	 */
 	public PlayfairCipher() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -93,7 +93,7 @@ public class PlayfairCipher extends JFrame {
 		label.setBounds(30, 112, 46, 14);
 		panel.add(label);
 		
-		JButton btnEncrypt = new JButton("Encryption");
+		JButton btnEncrypt = new JButton("Encrypt");
 		btnEncrypt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(plainText.getText().equals("")){
@@ -120,7 +120,7 @@ public class PlayfairCipher extends JFrame {
 		btnEncrypt.setBounds(102, 142, 89, 23);
 		panel.add(btnEncrypt);
 		
-		JButton btnDecrypt = new JButton("Decryption");
+		JButton btnDecrypt = new JButton("Decrypt");
 		btnDecrypt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(cipherText.getText().equals("")){
@@ -133,7 +133,9 @@ public class PlayfairCipher extends JFrame {
 					plainText.setText(Caesar.decrypt(cipherText.getText(), Integer.parseInt(key.getText())));
 				}
 				if(comboBox.getSelectedIndex() == 1){
-					key.setText(Monoalphabetic.generateKey());
+					if(key.getText().length() != 27 ){
+						return;
+					}
 					plainText.setText(Monoalphabetic.decrypt(cipherText.getText(), key.getText()));
 				}
 				if(comboBox.getSelectedIndex() == 2){
